@@ -1,6 +1,6 @@
 // ===== 配置区域 =====
 // 请修改下面的日期为你们在一起的日期
-const TOGETHER_DATE = new Date('2024-01-01');  // 格式: YYYY-MM-DD
+const TOGETHER_DATE = new Date('2022-07-18');  // 格式: YYYY-MM-DD
 
 // ===== 计算恋爱天数 =====
 function calculateLoveDays() {
