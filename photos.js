@@ -3,7 +3,7 @@
 // 背景音乐链接
 // 请替换为你的音乐文件链接（支持 mp3 格式）
 // 例如：const MUSIC_URL = 'https://example.com/我们俩.mp3';
-const MUSIC_URL = '';  // 在这里填入音乐链接
+const MUSIC_URL = 'https://love-photos.oss-cn-chengdu.aliyuncs.com/photos/%E9%83%AD%E9%A1%B6%20-%20%E6%88%91%E4%BB%AC%E4%BF%A9.mp3';  // 在这里填入音乐链接
 
 // ===== 照片配置 =====
 // 在这里添加你们的照片
