@@ -107,10 +107,19 @@ let isMusicPlaying = false;
 // 初始化音乐
 function initMusic() {
     const music = document.getElementById('bgMusic');
-    const source = document.getElementById('musicSource');
+    const mp3Source = document.getElementById('musicSource');
+    const aacSource = document.getElementById('musicSourceAac');
     
     if (typeof MUSIC_URL !== 'undefined' && MUSIC_URL) {
-        source.src = MUSIC_URL;
+        // 自动检测格式
+        const isAac = MUSIC_URL.toLowerCase().endsWith('.aac') || 
+                      MUSIC_URL.toLowerCase().endsWith('.m4a');
+        
+        if (isAac) {
+            aacSource.src = MUSIC_URL;
+        } else {
+            mp3Source.src = MUSIC_URL;
+        }
         music.load();
     }
 }
@@ -119,8 +128,10 @@ function initMusic() {
 function toggleMusic() {
     const music = document.getElementById('bgMusic');
     const btn = document.getElementById('musicToggle');
+    const mp3Source = document.getElementById('musicSource');
+    const aacSource = document.getElementById('musicSourceAac');
     
-    if (!music || !music.querySelector('source').src) {
+    if (!music || (!mp3Source.src && !aacSource.src)) {
         showToast('请在 photos.js 中配置音乐链接');
         return;
     }
@@ -131,7 +142,8 @@ function toggleMusic() {
             btn.classList.add('active');
             btn.querySelector('.icon').textContent = '🔊';
             showToast('🎵 音乐播放中');
-        }).catch(() => {
+        }).catch((err) => {
+            console.error('播放失败:', err);
             showToast('播放失败，请检查音乐链接');
         });
     } else {
@@ -279,20 +291,16 @@ function getSortedPhotos() {
     if (typeof PHOTOS === 'undefined' || PHOTOS.length === 0) {
         return [];
     }
-    // 按日期排序（最新的在前）
-    return [...PHOTOS].sort((a, b) => new Date(b.date) - new Date(a.date));
+    // 直接返回，不排序
+    return [...PHOTOS];
 }
 
 // 创建照片元素
 function createPhotoElement(photo, index) {
-    const date = new Date(photo.date);
-    const formattedDate = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
-    
     return `
         <div class="photo-item" data-index="${index}" onclick="openLightbox(${index})">
             <img src="${photo.url}" alt="${photo.desc || '我们的照片'}" loading="lazy">
             <div class="photo-info">
-                <div class="date">${formattedDate}</div>
                 <div class="desc">${photo.desc || ''}</div>
             </div>
         </div>
@@ -364,7 +372,6 @@ function renderAllViews() {
     photos = getSortedPhotos();
     renderMasonryView();
     renderGridView();
-    renderTimelineView();
     updatePhotoCount();
 }
 
@@ -384,18 +391,20 @@ function switchView(view) {
         btn.classList.toggle('active', btn.dataset.view === view);
     });
     
+    // 轮播视图：直接打开 lightbox
+    if (view === 'carousel') {
+        currentPhotoIndex = 0;
+        openLightbox(0);
+        startAutoplay();
+        return;
+    }
+    
     // 显示/隐藏对应视图
     const masonryEl = document.getElementById('photoMasonry');
     const gridEl = document.getElementById('photoGrid');
-    const timelineEl = document.getElementById('photoTimeline');
-    const milestonesSection = document.getElementById('milestonesSection');
     
     masonryEl.classList.toggle('hidden', view !== 'masonry');
     gridEl.classList.toggle('hidden', view !== 'grid');
-    timelineEl.classList.toggle('hidden', view !== 'timeline');
-    
-    // 时间线视图时隐藏纪念日区域，避免重复
-    milestonesSection.style.display = view === 'timeline' ? 'none' : 'block';
 }
 
 // ===== 照片预览弹窗 / 轮播模式 =====
