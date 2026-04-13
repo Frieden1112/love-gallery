@@ -24,9 +24,6 @@
     <!-- 主要内容 -->
     <div class="main-content" id="mainContent">
     
-    <!-- 飘落动画容器 -->
-    <div class="falling-container" id="fallingContainer"></div>
-
     <!-- 顶部工具栏 -->
     <div class="toolbar">
         <div class="toolbar-left">
@@ -35,9 +32,6 @@
         <div class="toolbar-right">
             <button class="tool-btn" id="darkModeToggle" title="夜间模式">
                 <span class="icon">🌙</span>
-            </button>
-            <button class="tool-btn" id="loveEffectToggle" title="爱心特效">
-                <span class="icon">💖</span>
             </button>
             <button class="tool-btn" id="musicToggle" title="背景音乐">
                 <span class="icon">🎵</span>
@@ -152,6 +146,11 @@
     <div class="toast" id="toast"></div>
 
     </div><!-- end main-content -->
+
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop>
+        <source src="" id="musicSource" type="audio/mpeg">
+    </audio>
 
     <script src="photos.js"></script>
     <script src="script.js"></script>

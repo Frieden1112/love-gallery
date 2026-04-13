@@ -19,6 +19,8 @@ function checkPassword() {
         document.getElementById('mainContent').style.display = 'block';
         // 保存登录状态到 sessionStorage
         sessionStorage.setItem('authenticated', 'true');
+        // 初始化主内容
+        initMainContent();
     } else {
         // 密码错误
         hint.textContent = '密码错误，请重试';
@@ -27,12 +29,22 @@ function checkPassword() {
     }
 }
 
+// 初始化主内容
+function initMainContent() {
+    initTheme();
+    updateLoveCounter();
+    renderAllViews();
+    switchView('masonry');
+    initMusic();
+}
+
 // 回车键提交
 document.addEventListener('DOMContentLoaded', function() {
     // 检查是否已登录
     if (sessionStorage.getItem('authenticated') === 'true') {
         document.getElementById('lockScreen').style.display = 'none';
         document.getElementById('mainContent').style.display = 'block';
+        initMainContent();
     }
     
     // 回车键提交密码
@@ -52,7 +64,6 @@ let currentPhotoIndex = 0;
 let photos = [];
 let autoplayInterval = null;
 let isDarkMode = false;
-let isLoveEffectActive = false;
 let isLiked = false;
 
 // ===== 工具函数 =====
@@ -89,66 +100,45 @@ function initTheme() {
     }
 }
 
-// ===== 飘落爱心/花瓣特效 =====
-
-// 创建飘落元素
-function createFallingElement() {
-    const container = document.getElementById('fallingContainer');
-    const hearts = ['💖', '💕', '💗', '💓', '💝', '🌸', '✨', '💫'];
-    const element = document.createElement('div');
-    element.className = 'falling-heart';
-    element.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-    element.style.left = Math.random() * 100 + '%';
-    element.style.fontSize = (Math.random() * 15 + 15) + 'px';
-    element.style.animationDuration = (Math.random() * 3 + 4) + 's';
-    container.appendChild(element);
-    
-    // 动画结束后移除元素
-    setTimeout(() => element.remove(), 7000);
-}
-
-// 切换爱心特效
-function toggleLoveEffect() {
-    isLoveEffectActive = !isLoveEffectActive;
-    const btn = document.getElementById('loveEffectToggle');
-    btn.classList.toggle('active', isLoveEffectActive);
-    
-    if (isLoveEffectActive) {
-        showToast('💖 爱心特效已开启');
-    } else {
-        showToast('💖 爱心特效已关闭');
-    }
-}
-
-// 启动/停止爱心特效
-function startLoveEffect() {
-    if (isLoveEffectActive) {
-        createFallingElement();
-        setTimeout(startLoveEffect, 300 + Math.random() * 500);
-    }
-}
-
 // ===== 背景音乐 =====
 
+let isMusicPlaying = false;
+
+// 初始化音乐
+function initMusic() {
+    const music = document.getElementById('bgMusic');
+    const source = document.getElementById('musicSource');
+    
+    if (typeof MUSIC_URL !== 'undefined' && MUSIC_URL) {
+        source.src = MUSIC_URL;
+        music.load();
+    }
+}
+
+// 切换音乐播放
 function toggleMusic() {
     const music = document.getElementById('bgMusic');
     const btn = document.getElementById('musicToggle');
     
-    if (!music) {
+    if (!music || !music.querySelector('source').src) {
         showToast('请在 photos.js 中配置音乐链接');
         return;
     }
     
     if (music.paused) {
         music.play().then(() => {
+            isMusicPlaying = true;
             btn.classList.add('active');
+            btn.querySelector('.icon').textContent = '🔊';
             showToast('🎵 音乐播放中');
         }).catch(() => {
             showToast('播放失败，请检查音乐链接');
         });
     } else {
         music.pause();
+        isMusicPlaying = false;
         btn.classList.remove('active');
+        btn.querySelector('.icon').textContent = '🎵';
         showToast('🎵 音乐已暂停');
     }
 }
@@ -504,12 +494,6 @@ document.querySelectorAll('.view-btn').forEach(btn => {
 
 // 工具栏按钮
 document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
-document.getElementById('loveEffectToggle').addEventListener('click', () => {
-    toggleLoveEffect();
-    if (isLoveEffectActive) {
-        startLoveEffect();
-    }
-});
 document.getElementById('musicToggle').addEventListener('click', toggleMusic);
 document.getElementById('shareBtn').addEventListener('click', shareLink);
 
@@ -524,30 +508,6 @@ document.getElementById('autoplayToggle').addEventListener('change', function() 
 
 // 双击点赞
 document.querySelector('.lightbox-img-container').addEventListener('click', showLikeAnimation);
-
-// ===== 初始化 =====
-document.addEventListener('DOMContentLoaded', function() {
-    // 显示骨架屏
-    document.getElementById('skeleton').classList.add('show');
-    
-    // 模拟加载延迟
-    setTimeout(() => {
-        // 隐藏骨架屏
-        document.getElementById('skeleton').classList.remove('show');
-        
-        // 初始化
-        initTheme();
-        updateLoveCounter();
-        renderTimeline();
-        renderAllViews();
-        switchView('masonry');
-        
-        // 如果启用了爱心特效，开始飘落
-        if (isLoveEffectActive) {
-            startLoveEffect();
-        }
-    }, 800);
-});
 
 // 触摸滑动支持
 let touchStartX = 0;
