@@ -21,8 +21,8 @@
         </div>
     </div>
 
-    <!-- 主要内容（默认隐藏） -->
-    <div class="main-content" id="mainContent" style="display: none;">
+    <!-- 主要内容 -->
+    <div class="main-content" id="mainContent">
     
     <!-- 飘落动画容器 -->
     <div class="falling-container" id="fallingContainer"></div>
@@ -33,19 +33,15 @@
             <span class="photo-count" id="photoCount">0 张照片</span>
         </div>
         <div class="toolbar-right">
-            <!-- 夜间模式切换 -->
             <button class="tool-btn" id="darkModeToggle" title="夜间模式">
                 <span class="icon">🌙</span>
             </button>
-            <!-- 爱心特效 -->
             <button class="tool-btn" id="loveEffectToggle" title="爱心特效">
                 <span class="icon">💖</span>
             </button>
-            <!-- 背景音乐 -->
             <button class="tool-btn" id="musicToggle" title="背景音乐">
                 <span class="icon">🎵</span>
             </button>
-            <!-- 分享 -->
             <button class="tool-btn" id="shareBtn" title="分享链接">
                 <span class="icon">🔗</span>
             </button>
@@ -66,7 +62,7 @@
                 <span class="days" id="loveDays">0</span>
                 <span class="label">天</span>
             </div>
-            <p class="date-hint">从 <span id="startDate">2024.01.01</span> 开始</p>
+            <p class="date-hint">从 <span id="startDate">2022.07.18</span> 开始</p>
         </div>
     </header>
 
@@ -108,49 +104,25 @@
     <!-- 照片墙 -->
     <section class="gallery" id="gallerySection">
         <h2>📸 我们的回忆</h2>
-        
-        <!-- 瀑布流视图 -->
-        <div class="photo-masonry" id="photoMasonry">
-            <!-- 由 JS 动态生成 -->
-        </div>
-        
-        <!-- 九宫格视图 -->
-        <div class="photo-grid" id="photoGrid">
-            <!-- 由 JS 动态生成 -->
-        </div>
-        
+        <div class="photo-masonry" id="photoMasonry"></div>
+        <div class="photo-grid" id="photoGrid"></div>
     </section>
-
-    <!-- 骨架屏加载 -->
-    <div class="skeleton" id="skeleton">
-        <div class="skeleton-item"></div>
-        <div class="skeleton-item"></div>
-        <div class="skeleton-item"></div>
-        <div class="skeleton-item"></div>
-        <div class="skeleton-item"></div>
-        <div class="skeleton-item"></div>
-    </div>
 
     <!-- 底部 -->
     <footer>
         <p>Made with 💙 | 我们的专属空间</p>
     </footer>
 
-    <!-- 照片预览弹窗 / 轮播模式 -->
+    <!-- 照片预览弹窗 -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-content">
             <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-            
-            <!-- 轮播控制 -->
             <button class="carousel-btn carousel-prev" onclick="prevPhoto()">❮</button>
             <button class="carousel-btn carousel-next" onclick="nextPhoto()">❯</button>
-            
             <div class="lightbox-img-container">
                 <img src="" alt="" id="lightboxImg">
-                <!-- 双击点赞效果 -->
                 <div class="like-animation" id="likeAnimation">💖</div>
             </div>
-            
             <div class="lightbox-info">
                 <span class="photo-counter" id="photoCounter">1 / 1</span>
                 <p class="photo-desc" id="lightboxDesc"></p>
@@ -166,8 +138,6 @@
                     </button>
                 </div>
             </div>
-            
-            <!-- 自动播放控制 -->
             <div class="autoplay-controls">
                 <label class="switch">
                     <input type="checkbox" id="autoplayToggle" checked>
@@ -178,18 +148,10 @@
         </div>
     </div>
 
-    </div> <!-- end main-content -->
-
     <!-- Toast 提示 -->
     <div class="toast" id="toast"></div>
 
-    <!-- 背景音乐（需要用户配置音乐链接） -->
-    <!-- 
-    请在 photos.js 中设置 MUSIC_URL 配置背景音乐
-    <audio id="bgMusic" loop>
-        <source src="你的音乐链接" type="audio/mpeg">
-    </audio>
-    -->
+    </div><!-- end main-content -->
 
     <script src="photos.js"></script>
     <script src="script.js"></script>

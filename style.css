@@ -92,6 +92,11 @@
     min-height: 20px;
 }
 
+/* 主内容默认隐藏 */
+.main-content {
+    display: none;
+}
+
 :root {
     /* 亮色主题 */
     --primary-color: #4a90d9;
