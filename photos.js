@@ -1,50 +1,22 @@
 // ===== 照片配置 =====
 // 在这里添加你们的照片
 // url: 照片的网络地址（上传到云存储后会获得）
-// date: 照片日期，格式 YYYY-MM-DD
-// desc: 照片描述/备注
+// desc: 照片描述/备注（可选）
 
 const PHOTOS = [
     // 示例照片（请替换为你自己的照片链接）
     {
-        url: 'https://example.com/photo1.jpg',
-        date: '2024-02-14',
-        desc: '情人节约会 💕'
+        url: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800',
+        desc: '我们的照片 💕'
     },
     {
-        url: 'https://example.com/photo2.jpg',
-        date: '2024-01-01',
-        desc: '在一起的第一天'
+        url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800',
+        desc: '美好的回忆 ✨'
     },
     // 添加更多照片...
     // {
     //     url: '你的照片链接',
-    //     date: '2024-03-20',
     //     desc: '照片描述'
-    // },
-];
-
-
-// ===== 纪念日配置 =====
-// 记录你们的重要时刻
-
-const MILESTONES = [
-    {
-        date: '2024-01-01',
-        title: '我们在一起了 💑'
-    },
-    {
-        date: '2024-02-14',
-        title: '第一个情人节 🌹'
-    },
-    {
-        date: '2024-04-13',
-        title: '创建了我们的专属空间 💙'
-    },
-    // 添加更多纪念日...
-    // {
-    //     date: '2024-05-20',
-    //     title: '520告白日'
     // },
 ];
 
@@ -58,12 +30,10 @@ const MILESTONES = [
 3. 在上面的 PHOTOS 数组中添加：
    {
        url: '刚才复制的图片链接',
-       date: '2024-05-01',
        desc: '照片描述'
    }
 
 提示：
-- date 格式必须是 YYYY-MM-DD
-- desc 可以为空
-- 照片会按日期倒序排列（最新的在最前面）
+- desc 可以为空或不填
+- 照片按照添加的顺序显示
 */

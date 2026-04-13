@@ -6,12 +6,60 @@
     <title>我们的故事 💙</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 头部区域 -->
+    <!-- 密码锁页面 -->
+    <div class="lock-screen" id="lockScreen">
+        <div class="lock-content">
+            <div class="lock-heart">💙</div>
+            <h2>我们的空间</h2>
+            <p>请输入密码进入</p>
+            <input type="password" id="passwordInput" placeholder="请输入密码" maxlength="10">
+            <button onclick="checkPassword()">进入</button>
+            <p class="lock-hint" id="lockHint"></p>
+        </div>
+    </div>
+
+    <!-- 主要内容（默认隐藏） -->
+    <div class="main-content" id="mainContent" style="display: none;">
+    
+    <!-- 飘落动画容器 -->
+    <div class="falling-container" id="fallingContainer"></div>
+
+    <!-- 顶部工具栏 -->
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <span class="photo-count" id="photoCount">0 张照片</span>
+        </div>
+        <div class="toolbar-right">
+            <!-- 夜间模式切换 -->
+            <button class="tool-btn" id="darkModeToggle" title="夜间模式">
+                <span class="icon">🌙</span>
+            </button>
+            <!-- 爱心特效 -->
+            <button class="tool-btn" id="loveEffectToggle" title="爱心特效">
+                <span class="icon">💖</span>
+            </button>
+            <!-- 背景音乐 -->
+            <button class="tool-btn" id="musicToggle" title="背景音乐">
+                <span class="icon">🎵</span>
+            </button>
+            <!-- 分享 -->
+            <button class="tool-btn" id="shareBtn" title="分享链接">
+                <span class="icon">🔗</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 头部 Hero 区域 -->
     <header class="hero">
         <div class="hero-content">
+            <div class="heart-bg">
+                <div class="heart heart-1">💙</div>
+                <div class="heart heart-2">💕</div>
+                <div class="heart heart-3">💖</div>
+            </div>
             <h1>我们的故事</h1>
             <p class="subtitle">记录每一个美好的瞬间</p>
             <div class="love-counter">
@@ -22,33 +70,126 @@
         </div>
     </header>
 
-    <!-- 纪念日时间线 -->
-    <section class="milestones">
-        <h2>💫 重要时刻</h2>
-        <div class="timeline" id="timeline">
-            <!-- 由 JS 动态生成 -->
-        </div>
-    </section>
+    <!-- 视图切换控制 -->
+    <div class="view-controls">
+        <button class="view-btn active" data-view="masonry" title="瀑布流">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <rect x="3" y="3" width="7" height="9" rx="1"/>
+                <rect x="14" y="3" width="7" height="5" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/>
+                <rect x="14" y="10" width="7" height="11" rx="1"/>
+            </svg>
+            <span>瀑布流</span>
+        </button>
+        <button class="view-btn" data-view="grid" title="九宫格">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <rect x="3" y="3" width="5" height="5" rx="1"/>
+                <rect x="10" y="3" width="5" height="5" rx="1"/>
+                <rect x="17" y="3" width="5" height="5" rx="1"/>
+                <rect x="3" y="10" width="5" height="5" rx="1"/>
+                <rect x="10" y="10" width="5" height="5" rx="1"/>
+                <rect x="17" y="10" width="5" height="5" rx="1"/>
+                <rect x="3" y="17" width="5" height="5" rx="1"/>
+                <rect x="10" y="17" width="5" height="5" rx="1"/>
+                <rect x="17" y="17" width="5" height="5" rx="1"/>
+            </svg>
+            <span>九宫格</span>
+        </button>
+        <button class="view-btn" data-view="carousel" title="轮播">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                <polyline points="15,12 19,9 19,15" fill="none" stroke="white" stroke-width="2"/>
+                <polyline points="9,12 5,9 5,15" fill="none" stroke="white" stroke-width="2"/>
+            </svg>
+            <span>轮播</span>
+        </button>
+    </div>
 
     <!-- 照片墙 -->
-    <section class="gallery">
+    <section class="gallery" id="gallerySection">
         <h2>📸 我们的回忆</h2>
+        
+        <!-- 瀑布流视图 -->
+        <div class="photo-masonry" id="photoMasonry">
+            <!-- 由 JS 动态生成 -->
+        </div>
+        
+        <!-- 九宫格视图 -->
         <div class="photo-grid" id="photoGrid">
             <!-- 由 JS 动态生成 -->
         </div>
+        
     </section>
+
+    <!-- 骨架屏加载 -->
+    <div class="skeleton" id="skeleton">
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+        <div class="skeleton-item"></div>
+    </div>
 
     <!-- 底部 -->
     <footer>
         <p>Made with 💙 | 我们的专属空间</p>
     </footer>
 
-    <!-- 照片预览弹窗 -->
+    <!-- 照片预览弹窗 / 轮播模式 -->
     <div class="lightbox" id="lightbox">
-        <span class="close-btn" onclick="closeLightbox()">&times;</span>
-        <img src="" alt="" id="lightboxImg">
-        <p class="photo-desc" id="lightboxDesc"></p>
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            
+            <!-- 轮播控制 -->
+            <button class="carousel-btn carousel-prev" onclick="prevPhoto()">❮</button>
+            <button class="carousel-btn carousel-next" onclick="nextPhoto()">❯</button>
+            
+            <div class="lightbox-img-container">
+                <img src="" alt="" id="lightboxImg">
+                <!-- 双击点赞效果 -->
+                <div class="like-animation" id="likeAnimation">💖</div>
+            </div>
+            
+            <div class="lightbox-info">
+                <span class="photo-counter" id="photoCounter">1 / 1</span>
+                <p class="photo-desc" id="lightboxDesc"></p>
+                <div class="lightbox-actions">
+                    <button class="action-btn" onclick="downloadCurrentPhoto()" title="下载">
+                        <span>⬇️</span> 下载
+                    </button>
+                    <button class="action-btn" onclick="shareCurrentPhoto()" title="分享">
+                        <span>🔗</span> 分享
+                    </button>
+                    <button class="action-btn" onclick="toggleLike()" title="点赞">
+                        <span id="likeIcon">🤍</span> 点赞
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 自动播放控制 -->
+            <div class="autoplay-controls">
+                <label class="switch">
+                    <input type="checkbox" id="autoplayToggle" checked>
+                    <span class="slider"></span>
+                </label>
+                <span>自动播放</span>
+            </div>
+        </div>
     </div>
+
+    </div> <!-- end main-content -->
+
+    <!-- Toast 提示 -->
+    <div class="toast" id="toast"></div>
+
+    <!-- 背景音乐（需要用户配置音乐链接） -->
+    <!-- 
+    请在 photos.js 中设置 MUSIC_URL 配置背景音乐
+    <audio id="bgMusic" loop>
+        <source src="你的音乐链接" type="audio/mpeg">
+    </audio>
+    -->
 
     <script src="photos.js"></script>
     <script src="script.js"></script>
