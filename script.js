@@ -110,6 +110,12 @@ function initMusic() {
     const mp3Source = document.getElementById('musicSource');
     const aacSource = document.getElementById('musicSourceAac');
     
+    // 防御性检查
+    if (!music || !mp3Source || !aacSource) {
+        console.warn('音乐元素未找到');
+        return;
+    }
+    
     if (typeof MUSIC_URL !== 'undefined' && MUSIC_URL) {
         // 自动检测格式
         const isAac = MUSIC_URL.toLowerCase().endsWith('.aac') || 
