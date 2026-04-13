@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我们的故事 💙</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 头部区域 -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>我们的故事</h1>
+            <p class="subtitle">记录每一个美好的瞬间</p>
+            <div class="love-counter">
+                <span class="days" id="loveDays">0</span>
+                <span class="label">天</span>
+            </div>
+            <p class="date-hint">从 <span id="startDate">2024.01.01</span> 开始</p>
+        </div>
+    </header>
+
+    <!-- 纪念日时间线 -->
+    <section class="milestones">
+        <h2>💫 重要时刻</h2>
+        <div class="timeline" id="timeline">
+            <!-- 由 JS 动态生成 -->
+        </div>
+    </section>
+
+    <!-- 照片墙 -->
+    <section class="gallery">
+        <h2>📸 我们的回忆</h2>
+        <div class="photo-grid" id="photoGrid">
+            <!-- 由 JS 动态生成 -->
+        </div>
+    </section>
+
+    <!-- 底部 -->
+    <footer>
+        <p>Made with 💙 | 我们的专属空间</p>
+    </footer>
+
+    <!-- 照片预览弹窗 -->
+    <div class="lightbox" id="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <img src="" alt="" id="lightboxImg">
+        <p class="photo-desc" id="lightboxDesc"></p>
+    </div>
+
+    <script src="photos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

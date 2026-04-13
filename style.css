@@ -1,0 +1,278 @@
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8f0fe 100%);
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 头部 Hero 区域 */
+.hero {
+    background: linear-gradient(135deg, #4a90d9 0%, #357abd 50%, #2563a8 100%);
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    animation: shimmer 15s infinite linear;
+}
+
+@keyframes shimmer {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+    letter-spacing: 4px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+.love-counter {
+    display: inline-flex;
+    align-items: baseline;
+    background: rgba(255,255,255,0.2);
+    padding: 15px 40px;
+    border-radius: 50px;
+    margin-bottom: 15px;
+}
+
+.love-counter .days {
+    font-size: 4rem;
+    font-weight: 300;
+    margin-right: 8px;
+}
+
+.love-counter .label {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.date-hint {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* 纪念日时间线 */
+.milestones {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.milestones h2 {
+    text-align: center;
+    color: #4a90d9;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #4a90d9, #8bb8e8);
+}
+
+.timeline-item {
+    position: relative;
+    padding: 20px 0 20px 30px;
+    border-bottom: 1px solid #e0e8f0;
+}
+
+.timeline-item:last-child {
+    border-bottom: none;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -35px;
+    top: 25px;
+    width: 12px;
+    height: 12px;
+    background: #4a90d9;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 3px #4a90d9;
+}
+
+.timeline-date {
+    font-size: 0.85rem;
+    color: #4a90d9;
+    font-weight: 500;
+}
+
+.timeline-title {
+    font-size: 1.1rem;
+    margin: 5px 0;
+    color: #333;
+}
+
+/* 照片墙 */
+.gallery {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+.gallery h2 {
+    text-align: center;
+    color: #4a90d9;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.photo-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(74, 144, 217, 0.15);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #fff;
+}
+
+.photo-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(74, 144, 217, 0.25);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+}
+
+.photo-info {
+    padding: 15px;
+    background: #fff;
+}
+
+.photo-info .date {
+    font-size: 0.8rem;
+    color: #4a90d9;
+}
+
+.photo-info .desc {
+    margin-top: 5px;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* 照片预览弹窗 */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.close-btn:hover {
+    opacity: 0.7;
+}
+
+.photo-desc {
+    color: #ccc;
+    margin-top: 20px;
+    font-size: 1rem;
+}
+
+/* 底部 */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .love-counter .days {
+        font-size: 3rem;
+    }
+    
+    .photo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+    }
+    
+    .photo-item img {
+        height: 200px;
+    }
+}
